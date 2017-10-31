@@ -5,6 +5,8 @@ module RailsSettings
 
     field :creator, type: String
 
+    validates :var, presence: true, uniqueness: { scope: [:thing_type, :thing_id],  message: 'Name is already taken' }
+
 
     before_save :set_creator
 
