@@ -100,7 +100,8 @@ module RailsSettings
 
     #get the value field, YAML decoded
     def value
-      YAML::load(self[:value])
+      allowed_classes = [Hashie::Mash, Symbol, Date, Time]
+      YAML.safe_load(self[:value], permitted_classes: allowed_classes)
     end
 
     #set the value field, YAML encoded
@@ -112,6 +113,5 @@ module RailsSettings
       # unscoped.where("thing_type is NULL and thing_id is NULL")
       unscoped.and(thing_type: nil, thing_id: nil) 
     end
-
   end
 end
